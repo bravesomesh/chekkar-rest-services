@@ -1,18 +1,23 @@
-var mongo = require('mongodb');
+var mongodb = require('mongodb');
 
-var Server = mongo.Server,
-    Db = mongo.Db,
-    BSON = mongo.BSONPure;
+//We need to work with "MongoClient" interface in order to connect to a mongodb server.
+var MongoClient = mongodb.MongoClient;
 
-var mongoUri = process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com:57244/heroku_l7s5s5q7';
+// Connection URL. This is where your mongodb server is running.
+var url = 'mongodb://heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com:57244/heroku_l7s5s5q7';
 
-mongo.Db.connect(mongoUri, function(err, db) {
+// Use connect method to connect to the Server
+MongoClient.connect(url, function(err, db) {
     if (err) {
-        console.log("Unable to connect");
+        console.log('Unable to connect to the mongoDB server. Error:', err);
     } else {
-        db.collection('wines', function(er, collection) {
+        //HURRAY!! We are connected. :)
+        console.log('Connection established to', url);
+
+        db.collection('wines', {
+            safe: true
+        }, function(err, collection) {
+            console.log('collection is ' + collection);
             if (err) {
                 console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
                 populateDB();
