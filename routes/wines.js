@@ -9,12 +9,16 @@ var mongoUri = process.env.MONGOLAB_URI ||
     'mongodb://heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com:57244/heroku_l7s5s5q7';
 
 mongo.Db.connect(mongoUri, function(err, db) {
-    db.collection('wines', function(er, collection) {
-        if (err) {
-            console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
-            populateDB();
-        }
-    });
+    if (err) {
+        console.log("Unable to connect");
+    } else {
+        db.collection('wines', function(er, collection) {
+            if (err) {
+                console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
+                populateDB();
+            }
+        });
+    }
 });
 
 // var server = new Server("heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com", 57244, {
