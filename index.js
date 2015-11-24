@@ -1,46 +1,24 @@
-var express = require('express'); 
-var profile = require('.routes/profile');
-var venues = require('.routes/venues');
-var favVenue = require('.routes/favVenue');
-var app = express(); 
 
-app.configure(function () { 
-	app.use(express.logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */ 
-    app.use(express.bodyParser()); 
+var express = require('express'),
+    path = require('path'),
+    http = require('http'),
+    wine = require('./routes/wines');
+
+var app = express();
+
+app.configure(function () {
+    app.set('port', process.env.PORT || 3000);
+    app.use(express.logger('dev'));  /* 'default', 'short', 'tiny', 'dev' */
+    app.use(express.bodyParser()),
+    app.use(express.static(path.join(__dirname, 'public')));
 });
 
-// Profile services
-app.get('/profile/:id', profile.findById); 
-app.post('/profile', wine.addProfile); 
-app.put('/profile/:id', wine.updateProfile); 
-// app.delete('/profile/:id', wine.deleteProfile); 
+app.get('/wines', wine.findAll);
+app.get('/wines/:id', wine.findById);
+app.post('/wines', wine.addWine);
+app.put('/wines/:id', wine.updateWine);
+app.delete('/wines/:id', wine.deleteWine);
 
-// Yo services
-// Notabin get profile id from session
-app.get('/yoList', yoList.FindAll);
-app.get('/yoList/:id', yoList.findById);
-
-// No services
-// Notabin get profile id from session
-app.get('/noList', noList.FindAll);
-app.get('/noList/:id', noList.findById);
-
-// Venue services
-// Get Details like geo, chekkar etc from session
-// Get all suggestion from foursquare and google places
-app.get('/venueByGeo', getVenuesRecommendationByGeoLocation);
-app.get('/venueByLikes', getVenuesRecommedationByLikes);
-app.get('/venueByMovie');
-app.get('/venueByClubs');
-app.get('/venueByDessert');
-app.get('/venueByTopPick');
-app.get('/venueByCoffee');
-
-
-// Favorite Venues
-app.get('/getFavVenueList', favVenue.getFavVenueList);
-app.get('/getFavVenueList/:id' favVenue,getFavVenueById);
-app.post('/addFavVenue', favVenue.addFavVenue);
-
-app.listen(3000);
-console.log('Listening on port 3000...');
+http.createServer(app).listen(app.get('port'), function () {
+    console.log("Express server listening on port " + app.get('port'));
+});
