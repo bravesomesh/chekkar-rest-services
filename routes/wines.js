@@ -6,23 +6,24 @@ var MongoClient = mongodb.MongoClient;
 // Connection URL. This is where your mongodb server is running.
 var url = 'mongodb://heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com:57244/heroku_l7s5s5q7';
 
-var db = null;
+var db;
 // Use connect method to connect to the Server
-MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, database) {
     if (err) {
         console.log('Unable to connect to the mongoDB server. Error:', err);
     } else {
         //HURRAY!! We are connected. :)
         console.log('Connection established to', url);
 
-        db = db;
+        db = database;
         db.collection('wines', {
             safe: true
         }, function(err, collection) {
-            console.log("collection IS " + JSON.stringify(collection));
             if (err) {
                 console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
                 populateDB();
+            } else {
+                console.log("collection IS " + JSON.stringify(collection));
             }
         });
     }
@@ -335,9 +336,13 @@ var populateDB = function() {
     }];
 
     db.collection('wines', function(err, collection) {
-        collection.insert(wines, {
-            safe: true
-        }, function(err, result) {});
+        if (err) {
+            console.log("error while creating collection " + JSON.stringify(err));
+        } else {
+            collection.insert(wines, {
+                safe: true
+            }, function(err, result) {});
+        }
     });
 
 };
