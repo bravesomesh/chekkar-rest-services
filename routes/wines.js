@@ -4,12 +4,12 @@ var Server = mongo.Server,
     Db = mongo.Db,
     BSON = mongo.BSONPure;
 
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('winedb', server, {safe: true});
+var server = new Server(process.env.MONGOLAB_URL, {auto_reconnect: true});
+db = new Db('chekkar', server, {safe: true});
 
 db.open(function(err, db) {
     if(!err) {
-        console.log("Connected to 'winedb' database");
+        console.log("Connected to 'chekkar' database");
         db.collection('wines', {safe:true}, function(err, collection) {
             if (err) {
                 console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
