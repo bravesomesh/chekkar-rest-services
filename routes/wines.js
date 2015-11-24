@@ -6,6 +6,7 @@ var MongoClient = mongodb.MongoClient;
 // Connection URL. This is where your mongodb server is running.
 var url = 'mongodb://heroku_l7s5s5q7:m5692c2ab57pvc9j8c15o6dqh@ds057244.mongolab.com:57244/heroku_l7s5s5q7';
 
+var db = null;
 // Use connect method to connect to the Server
 MongoClient.connect(url, function(err, db) {
     if (err) {
@@ -14,11 +15,12 @@ MongoClient.connect(url, function(err, db) {
         //HURRAY!! We are connected. :)
         console.log('Connection established to', url);
 
+        db = db;
         db.collection('wines', {
             safe: true
         }, function(err, collection) {
+            console.log("collection IS " + JSON.stringify(collection));
             if (err) {
-                console.log("collection IS " + JSON.stringify(collection));
                 console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
                 populateDB();
             }
