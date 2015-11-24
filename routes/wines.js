@@ -17,7 +17,6 @@ MongoClient.connect(url, function(err, db) {
         db.collection('wines', {
             safe: true
         }, function(err, collection) {
-            console.log('collection is ' + collection);
             if (err) {
                 console.log("The 'wines' collection doesn't exist. Creating it with sample data...");
                 populateDB();
