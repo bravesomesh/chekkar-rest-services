@@ -1,7 +1,7 @@
 var express = require('express'),
     path = require('path'),
     http = require('http'),
-    wine = require('./routes/wines'),
+    // wine = require('./routes/wines'),
     geo_data = require('./routes/geoProfile');
 
 var app = express();
@@ -13,11 +13,11 @@ app.configure(function() {
         app.use(express.static(path.join(__dirname, 'public')));
 });
 
-app.get('/wines', wine.findAll);
-app.get('/wines/:id', wine.findById);
-app.post('/wines', wine.addWine);
-app.put('/wines/:id', wine.updateWine);
-app.delete('/wines/:id', wine.deleteWine);
+// app.get('/wines', wine.findAll);
+// app.get('/wines/:id', wine.findById);
+// app.post('/wines', wine.addWine);
+// app.put('/wines/:id', wine.updateWine);
+// app.delete('/wines/:id', wine.deleteWine);
 
 // geo Data
 app.post('/addGeoData', geo_data.addGeoData);
