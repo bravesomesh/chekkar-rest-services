@@ -1,3 +1,13 @@
+// var sample_geo_data = [{
+            //         temp_user_id: "1234",
+            //         user_id: "",
+            //         latitude: "123.111212",
+            //         longitude: "63.234344",
+            //         locality: "Jodhpur",
+            //         postalCode: "123456",
+            //         Country: "India"
+            //     }];
+
 var mongodb = require('mongodb');
 //We need to work with "MongoClient" interface in order to connect to a mongodb server.
 var MongoClient = mongodb.MongoClient;
