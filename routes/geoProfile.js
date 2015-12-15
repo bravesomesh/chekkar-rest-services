@@ -50,13 +50,13 @@ exports.addGeoData = function(req, res) {
 
 var populateDB = function() {
     var sample_geo_data = [{
-        temp_user_id = "1234",
-            user_id = "",
-            latitude = "123.111212",
-            longitude = "63.234344",
-            locality = "Jodhpur",
-            postalCode = "123456",
-            Country = "India"
+        temp_user_id: "1234",
+        user_id: "",
+        latitude: "123.111212",
+        longitude: "63.234344",
+        locality: "Jodhpur",
+        postalCode: "123456",
+        Country: "India"
     }];
     db.collection('geolocation', function(err, collection) {
         if (err) {
